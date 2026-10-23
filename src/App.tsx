@@ -30,7 +30,6 @@ function App() {
         description=""
         submitText="Sign Up"
         onSubmit={handleSubmit}
-        footerContent={signUpFooter}
       >
         <FormInput
           id="email"
