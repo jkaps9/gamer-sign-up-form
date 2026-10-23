@@ -23,6 +23,18 @@ function App() {
       },
     },
   );
+
+  const formFooter = (
+    <>
+      <p>
+        Already an operator?{" "}
+        <a href="#" className="accent-text">
+          Login
+        </a>
+      </p>
+    </>
+  );
+
   return (
     <>
       <Form
@@ -30,6 +42,7 @@ function App() {
         description=""
         submitText="Sign Up"
         onSubmit={handleSubmit}
+        footerContent={formFooter}
       >
         <FormInput
           id="callSign"
