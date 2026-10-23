@@ -32,11 +32,24 @@ function App() {
         onSubmit={handleSubmit}
       >
         <FormInput
+          id="callSign"
+          name="callSign"
+          label="Callsign"
+          type="text"
+          placeholder="e.g. Vortex_07"
+          value={formData.callSign}
+          onChange={handleChange}
+          errorMessage={errors.Callsign}
+          required
+          autoComplete="off"
+        />
+
+        <FormInput
           id="email"
           name="email"
           label="Email Address"
           type="email"
-          placeholder="name@email.com"
+          placeholder="you@example.com"
           value={formData.email}
           onChange={handleChange}
           errorMessage={errors.email}
@@ -49,12 +62,12 @@ function App() {
           name="password"
           label="Password"
           type="password"
-          placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           errorMessage={errors.password}
           required
           minLength={8}
+          autoComplete="new-password"
         />
 
         <FormInput
@@ -62,11 +75,11 @@ function App() {
           name="confirmPassword"
           label="Confirm Password"
           type="confirmPassword"
-          placeholder="Confirm Password"
           value={formData.confirmPassword}
           onChange={handleChange}
           required
           minLength={8}
+          autoComplete="new-password"
         />
       </Form>
     </>
