@@ -38,9 +38,9 @@ function App() {
   return (
     <>
       <Form
-        title="Sign Up"
-        description=""
-        submitText="Sign Up"
+        title="New Operator"
+        description="All fields required"
+        submitText="Initialize Account"
         onSubmit={handleSubmit}
         footerContent={formFooter}
       >
@@ -60,7 +60,7 @@ function App() {
         <FormInput
           id="email"
           name="email"
-          label="Email Address"
+          label="Email"
           type="email"
           placeholder="you@example.com"
           value={formData.email}
