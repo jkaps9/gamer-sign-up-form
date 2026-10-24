@@ -5,14 +5,23 @@ import { useForm } from "@hooks/useFormValidation";
 function App() {
   const { formData, setFormData, errors, handleChange, handleSubmit } = useForm(
     {
-      initialValues: { email: "", password: "", confirmPassword: "" },
+      initialValues: {
+        callSign: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        acceptTerms: false,
+      },
       validate: (values) => {
         const newErrors: Partial<Record<keyof typeof values, string>> = {};
+        if (!values.callSign) newErrors.callSign = "Can't be empty";
         if (!values.email) newErrors.email = "Can't be empty";
         if (!values.password) newErrors.password = "Can't be blank";
         if (values.password !== values.confirmPassword) {
           newErrors.confirmPassword = "Passwords do not match";
         }
+        if (!values.acceptTerms)
+          newErrors.acceptTerms = "Must accept to create account";
         return newErrors;
       },
       onSubmit: async (values) => {
@@ -90,6 +99,16 @@ function App() {
           required
           minLength={8}
           autoComplete="new-password"
+        />
+
+        <FormInput
+          id="acceptTerms"
+          name="acceptTerms"
+          label="I accept the Terms and Privacy Policy."
+          type="checkbox"
+          value={formData.acceptTerms}
+          onChange={handleChange}
+          required
         />
       </Form>
     </>
