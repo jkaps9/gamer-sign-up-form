@@ -76,30 +76,39 @@ function App() {
 
   return (
     <>
-      <header className="main-header">
-        <Logo></Logo>
-        <span className="text-upper">{numReady}/5 ready</span>
-      </header>
-      <section className="hero">
-        <h1>
-          <span className="text-accent">//</span> Join the Nexus
-        </h1>
-        <p className="text-upper">Initialize your Neoncore identity</p>
-      </section>
-      <section className="operator-details">
-        <div className="operator-details__id">
-          <span className="text-upper">Operator ID</span>
-          {(formData.callSign && (
-            <span className="operator-details__callSign">
-              {formData.callSign}
-            </span>
-          )) || (
-            <span className="text-upper operator-details__noCallSign">
-              Unassigned
-            </span>
-          )}
-        </div>
-      </section>
+      <div className="main-content">
+        <section className="main-header">
+          <Logo></Logo>
+          <span className="text-upper show-on-mobile">{numReady}/5 ready</span>
+        </section>
+        <section className="hero">
+          <h1>
+            <span className="text-accent">//</span> Join the Nexus
+          </h1>
+          <p className="text-upper">Initialize your Neoncore identity</p>
+        </section>
+        <section className="operator-details">
+          <div className="row">
+            <div className="operator-details__id">
+              <span className="text-upper">Operator ID</span>
+              {(formData.callSign && (
+                <span className="operator-details__callSign">
+                  {formData.callSign}
+                </span>
+              )) || (
+                <span className="text-upper operator-details__noCallSign">
+                  Unassigned
+                </span>
+              )}
+            </div>
+            <div className="hide-on-mobile">
+              <span className="text-upper show-on-mobile">
+                {numReady}/5 ready
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
       <Form
         title="New Operator"
         description="All fields required"

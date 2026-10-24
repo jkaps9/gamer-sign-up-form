@@ -68,10 +68,16 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 1126px;
+  max-width: 1440px;
   min-height: 100svh;
   padding-inline: 5vw;
   width: 100%;
+
+  @media (min-width: 64rem) {
+    align-items: center;
+    flex-direction: row;
+    gap: 4rem;
+  }
 }
 
 body {
@@ -129,6 +135,24 @@ p {
   color: var(--accent);
 }
 
+.show-on-mobile {
+  display: block;
+  visibility: visible;
+  @media (min-width: 48rem) {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.hide-on-mobile {
+  display: none;
+  visibility: hidden;
+  @media (min-width: 48rem) {
+    display: block;
+    visibility: visible;
+  }
+}
+
 .main-header {
   align-items: center;
   display: flex;
@@ -138,6 +162,13 @@ p {
 .hero {
   padding-block: 1rem;
 }
+
+.row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
 .operator-details {
   border-block-start: 1px solid var(--border);
   padding-block: 1rem;
