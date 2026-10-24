@@ -17,6 +17,8 @@ function App() {
       },
       validate: (values) => {
         const newErrors: Partial<Record<keyof typeof values, string>> = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if (!values.callSign) {
           newErrors.callSign = "Can't be empty";
         } else if (values.callSign.length < 3) {
@@ -27,9 +29,14 @@ function App() {
 
         if (!values.email) {
           newErrors.email = "Can't be empty";
+        } else if (!emailRegex.test(values.email)) {
+          newErrors.email = "Enter a valid email, like you@example.com";
         }
         if (!values.password) {
           newErrors.password = "Can't be blank";
+        }
+        if (!values.confirmPassword) {
+          newErrors.confirmPassword = "Can't be blank";
         }
         if (values.password !== values.confirmPassword) {
           newErrors.confirmPassword = "Passwords do not match";
@@ -112,12 +119,11 @@ function App() {
           id="email"
           name="email"
           label="Email"
-          type="email"
+          type="text"
           placeholder="you@example.com"
           value={formData.email}
           onChange={handleChange}
           errorMessage={errors.email}
-          required
           autoComplete="email"
         />
 
@@ -129,8 +135,6 @@ function App() {
           value={formData.password}
           onChange={handleChange}
           errorMessage={errors.password}
-          required
-          minLength={8}
           autoComplete="new-password"
         />
 
@@ -141,8 +145,7 @@ function App() {
           type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          required
-          minLength={8}
+          errorMessage={errors.confirmPassword}
           autoComplete="new-password"
         />
 
@@ -153,7 +156,7 @@ function App() {
           type="checkbox"
           value={formData.acceptTerms}
           onChange={handleChange}
-          required
+          errorMessage={errors.acceptTerms}
         />
       </Form>
     </>
