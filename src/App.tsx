@@ -91,7 +91,7 @@ function App() {
           <div className="row">
             <div className="operator-details__id">
               <span className="text-upper">Operator ID</span>
-              {(formData.callSign && (
+              {(formData.callSign && !errors.callSign && (
                 <span className="operator-details__callSign">
                   {formData.callSign}
                 </span>
@@ -102,11 +102,81 @@ function App() {
               )}
             </div>
             <div className="hide-on-mobile">
-              <span className="text-upper show-on-mobile">
-                {numReady}/5 ready
-              </span>
+              <span className="text-upper">{numReady}/5 ready</span>
             </div>
           </div>
+          <ul>
+            <li className="row">
+              <span className="attribute text-upper">Callsign</span>
+              <span
+                className={`value text-upper ${errors.callSign ? "text-error" : ""}`}
+              >
+                {errors.callSign
+                  ? formData.callSign.length < 3
+                    ? "Too short"
+                    : "Too long"
+                  : !formData.callSign && !errors.callSign
+                    ? "Pending"
+                    : "OK"}
+              </span>
+            </li>
+
+            <li className="row">
+              <span className="attribute text-upper">Email</span>
+              <span
+                className={`value text-upper ${errors.email ? "text-error" : ""}`}
+              >
+                {errors.email
+                  ? "Malformed"
+                  : !formData.email
+                    ? "Pending"
+                    : "OK"}
+              </span>
+            </li>
+
+            <li className="row">
+              <span className="attribute text-upper">Password</span>
+              <span
+                className={`value text-upper ${errors.password ? "text-error" : ""}`}
+              >
+                {errors.password
+                  ? formData.password.length < 8
+                    ? "Too short"
+                    : "Malformed"
+                  : !formData.password && !errors.password
+                    ? "Pending"
+                    : "OK"}
+              </span>
+            </li>
+
+            <li className="row">
+              <span className="attribute text-upper">Confirm</span>
+              <span
+                className={`value text-upper ${errors.confirmPassword ? "text-error" : ""}`}
+              >
+                {errors.confirmPassword
+                  ? formData.confirmPassword !== formData.password
+                    ? "Mismatch"
+                    : "Too short"
+                  : !formData.confirmPassword && !errors.confirmPassword
+                    ? "Pending"
+                    : "OK"}
+              </span>
+            </li>
+
+            <li className="row">
+              <span className="attribute text-upper">Terms</span>
+              <span
+                className={`value text-upper ${errors.acceptTerms ? "text-error" : ""}`}
+              >
+                {errors.acceptTerms
+                  ? "required"
+                  : !formData.acceptTerms
+                    ? "Pending"
+                    : "OK"}
+              </span>
+            </li>
+          </ul>
         </section>
       </div>
       <Form

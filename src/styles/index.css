@@ -123,6 +123,12 @@ a {
     color: var(--text-h);
   }
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .btn {
   background-color: var(--accent);
   border: 1px solid var(--accent-border);
@@ -142,6 +148,10 @@ a {
 
 .text-accent {
   color: var(--accent);
+}
+
+.text-error {
+  color: var(--red-400);
 }
 
 .show-on-mobile {
@@ -184,6 +194,9 @@ a {
   .operator-details__id {
     display: flex;
     justify-content: space-between;
+    @media (min-width: 64rem) {
+      flex-direction: column;
+    }
   }
 
   .operator-details__callSign {
@@ -193,6 +206,7 @@ a {
   .operator-details__callSign,
   .operator-details__noCallSign {
     font-family: var(--heading);
+    font-size: clamp(1rem, 0.8239rem + 0.7512vw, 1.5rem);
     font-weight: 700;
   }
 }
