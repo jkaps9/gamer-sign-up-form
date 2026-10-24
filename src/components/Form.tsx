@@ -21,12 +21,12 @@ export default function AuthForm({
   return (
     <form onSubmit={onSubmit} className={formStyles.form}>
       <header className={formStyles.header}>
-        <h1>{title}</h1>
+        <h2>{title}</h2>
         <p>{description}</p>
       </header>
       <section className={formStyles.section}>{children}</section>
       <footer className={`${formStyles.footer}`}>
-        <button type="submit" className="btn btn--primary">
+        <button type="submit" className="btn">
           {submitText}
         </button>
         {footerContent && (
