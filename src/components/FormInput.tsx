@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 
 import type { InputHTMLAttributes } from "react";
 import styles from "@styles/Forms.module.css";
+import AlertIcon from "@assets/images/icon-alert.svg?react";
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -76,9 +77,10 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           className={styles.input}
         />
         {isCurrentlyInvalid && errorMessage && (
-          <p id={errorId} className={styles.errorMessage}>
-            {errorMessage}
-          </p>
+          <div id={errorId} className={styles.errorMessage}>
+            <AlertIcon ariaHidden="true"></AlertIcon>
+            <span>{errorMessage}</span>
+          </div>
         )}
       </div>
     );
