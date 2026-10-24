@@ -32,17 +32,21 @@ function App() {
         } else if (!emailRegex.test(values.email)) {
           newErrors.email = "Enter a valid email, like you@example.com";
         }
+
         if (!values.password) {
           newErrors.password = "Can't be blank";
+        } else if (values.password.length < 8) {
+          newErrors.password = "Use at least 8 characters";
         }
+
         if (!values.confirmPassword) {
           newErrors.confirmPassword = "Can't be blank";
         }
         if (values.password !== values.confirmPassword) {
-          newErrors.confirmPassword = "Passwords do not match";
+          newErrors.confirmPassword = "Passwords don't match";
         }
         if (!values.acceptTerms) {
-          newErrors.acceptTerms = "Must accept to create account";
+          newErrors.acceptTerms = "Accept the terms to continue";
         }
         return newErrors;
       },
