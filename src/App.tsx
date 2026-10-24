@@ -50,6 +50,14 @@ function App() {
       newErrors.acceptTerms = "Accept the terms to continue";
     }
 
+    let count = 0;
+    if (values.callSign && !newErrors.callSign) count++;
+    if (values.email && !newErrors.email) count++;
+    if (values.password && !newErrors.password) count++;
+    if (values.confirmPassword && !newErrors.confirmPassword) count++;
+    if (values.acceptTerms && !newErrors.acceptTerms) count++;
+    setNumready(count);
+
     return newErrors;
   }, []);
 
