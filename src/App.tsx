@@ -38,7 +38,7 @@ function App() {
       <p>
         Already an operator?{" "}
         <a href="#" className="accent-text">
-          Login
+          Log in
         </a>
       </p>
     </>
@@ -131,7 +131,7 @@ function App() {
         <FormInput
           id="acceptTerms"
           name="acceptTerms"
-          label="I accept the Terms and Privacy Policy."
+          label="I accept the [Terms](#terms) and [Privacy Policy](#privacy)."
           type="checkbox"
           value={formData.acceptTerms}
           onChange={handleChange}

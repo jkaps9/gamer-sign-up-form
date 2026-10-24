@@ -9,6 +9,41 @@ export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   isInvalid?: boolean;
 }
 
+function parseMarkdownLinks(text: string): React.ReactNode[] {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const result: React.ReactNode[] = [];
+
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      result.push(text.substring(lastIndex, match.index));
+    }
+
+    const linkText = match[1];
+    const linkUrl = match[2];
+    result.push(
+      <a
+        key={match.index}
+        href={linkUrl}
+        target={linkUrl.startsWith("#") ? undefined : "_blank"}
+        rel="noreferrer"
+      >
+        {linkText}
+      </a>,
+    );
+
+    lastIndex = linkRegex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    result.push(text.substring(lastIndex));
+  }
+
+  return result;
+}
+
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   (
     {
@@ -29,7 +64,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <div className={`${styles.inputGroup} ${className || ""}`.trim()}>
         <label htmlFor={inputId} className={styles.label}>
-          {label}
+          <span>{parseMarkdownLinks(label)}</span>
         </label>
         <input
           id={inputId}
