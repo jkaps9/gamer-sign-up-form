@@ -5,7 +5,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
+  overflow-x: hidden;
+  padding: 2rem 1rem;
 }
 
 .section {
@@ -27,7 +28,6 @@
   color: var(--text);
   outline: none;
   padding: 1rem;
-  width: 100%;
 
   &[aria-invalid="true"],
   &:user-invalid {
@@ -78,6 +78,12 @@ button {
   gap: 0.5rem;
 }
 
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .inputGroup:has(input[type="checkbox"]) {
   align-items: flex-start;
   display: flex;
@@ -93,12 +99,6 @@ button {
   .form {
     max-width: 35rem;
     width: 75vw;
-  }
-  .inputGroup {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
   }
 
   .input {
