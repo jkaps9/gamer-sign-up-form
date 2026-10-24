@@ -81,8 +81,10 @@ button {
 }
 
 .footerContent {
+  align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -114,30 +116,5 @@ button {
   .form {
     max-width: 35rem;
     width: 75vw;
-  }
-
-  .input {
-    max-width: 60%;
-  }
-
-  .footer {
-    align-items: flex-end;
-  }
-
-  .footerContent {
-    align-self: stretch;
-    flex-direction: row;
-    gap: 4rem;
-    justify-content: space-between;
-
-    p {
-      text-align: end;
-      text-wrap: nowrap;
-      width: 100%;
-    }
-
-    a {
-      text-wrap: nowrap;
-    }
   }
 }
