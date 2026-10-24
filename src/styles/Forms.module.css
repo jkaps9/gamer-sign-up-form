@@ -25,7 +25,9 @@
   background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 0;
-  color: var(--text);
+  color: var(--text-h);
+  font-family: inherit;
+  font-size: inherit;
   outline: none;
   padding: 1rem;
 
@@ -35,6 +37,7 @@
   }
 
   &::placeholder {
+    color: var(--text-h);
     opacity: 0.5;
   }
   &:hover {
