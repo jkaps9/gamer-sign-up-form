@@ -1,5 +1,6 @@
-import React, { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
 
+import type { InputHTMLAttributes } from "react";
 import styles from "@styles/Forms.module.css";
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
