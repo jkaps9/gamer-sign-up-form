@@ -1,9 +1,6 @@
-import { useState } from "react";
-
-import FormInput from "@/components/FormInput";
-import Form from "@/components/Form";
-import { useForm } from "@/hooks/useFormValidation";
-import "./App.css";
+import FormInput from "@components/FormInput";
+import Form from "@components/Form";
+import { useForm } from "@hooks/useFormValidation";
 
 function App() {
   const { formData, setFormData, errors, handleChange, handleSubmit } = useForm(
