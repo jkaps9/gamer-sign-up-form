@@ -7,6 +7,11 @@
   gap: 2rem;
   overflow-x: hidden;
   padding: 2rem 1rem;
+
+  @media (min-width: 48rem) {
+    max-width: 30rem;
+    width: 75vw;
+  }
 }
 
 .section {
@@ -96,25 +101,16 @@ button {
 
 .inputGroup:has(input[type="checkbox"]) {
   column-gap: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
-  display: grid;
-  grid-template-columns: 1fr auto;
-
-  input {
-    grid-column: 1;
-    grid-row: 1;
-  }
   label {
-    grid-column: 2;
+    flex: 1;
   }
   div {
     grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 48rem) {
-  .form {
-    max-width: 35rem;
-    width: 75vw;
+    flex-basis: 100%;
   }
 }
