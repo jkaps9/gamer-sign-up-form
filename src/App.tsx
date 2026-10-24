@@ -53,29 +53,34 @@ function App() {
     return newErrors;
   }, []);
 
-  const { formData, setFormData, errors, handleChange, handleSubmit } = useForm(
-    {
-      initialValues: {
+  const {
+    formData,
+    setFormData,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useForm({
+    initialValues: {
+      callSign: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      acceptTerms: false,
+    },
+    validate: validateForm,
+    onSubmit: async () => {
+      setFormData(() => ({
         callSign: "",
         email: "",
         password: "",
         confirmPassword: "",
         acceptTerms: false,
-      },
-      validate: validateForm,
-      onSubmit: async () => {
-        setFormData(() => ({
-          callSign: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          acceptTerms: false,
-        }));
-        alert("Submission Successful");
-      },
-      debounceMs: 2000,
+      }));
+      alert("Submission Successful");
     },
-  );
+    debounceMs: 1000,
+  });
 
   const formFooter = (
     <>
@@ -208,6 +213,7 @@ function App() {
           placeholder="e.g. Vortex_07"
           value={formData.callSign}
           onChange={handleChange}
+          onBlur={handleBlur}
           errorMessage={errors.callSign}
           autoComplete="off"
         />
@@ -220,6 +226,7 @@ function App() {
           placeholder="you@example.com"
           value={formData.email}
           onChange={handleChange}
+          onBlur={handleBlur}
           errorMessage={errors.email}
           autoComplete="email"
         />
@@ -231,6 +238,7 @@ function App() {
           type="password"
           value={formData.password}
           onChange={handleChange}
+          onBlur={handleBlur}
           errorMessage={errors.password}
           autoComplete="new-password"
         />
@@ -242,6 +250,7 @@ function App() {
           type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
+          onBlur={handleBlur}
           errorMessage={errors.confirmPassword}
           autoComplete="new-password"
         />
@@ -252,7 +261,9 @@ function App() {
           label="I accept the [Terms](#terms) and [Privacy Policy](#privacy)."
           type="checkbox"
           value={formData.acceptTerms}
+          checked={formData.acceptTerms}
           onChange={handleChange}
+          onBlur={handleBlur}
           errorMessage={errors.acceptTerms}
         />
       </Form>

@@ -15,6 +15,7 @@ export function useForm<T extends Record<string, any>>({
 }: UseFormProps<T>) {
   const [formData, setFormData] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
   const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
@@ -22,11 +23,20 @@ export function useForm<T extends Record<string, any>>({
 
     const timer = setTimeout(() => {
       const validationErrors = validate(formData);
-      setErrors(validationErrors);
+
+      // Filter errors to only include fields the user has touched
+      const touchedErrors: Partial<Record<keyof T, string>> = {};
+      for (const key in validationErrors) {
+        if (touched[key]) {
+          touchedErrors[key] = validationErrors[key];
+        }
+      }
+
+      setErrors(touchedErrors);
     }, debounceMs);
 
     return () => clearTimeout(timer);
-  }, [formData, validate, debounceMs, isDirty]);
+  }, [formData, validate, debounceMs, isDirty, touched]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
@@ -35,23 +45,37 @@ export function useForm<T extends Record<string, any>>({
 
     if (!isDirty) setIsDirty(true);
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Mark field as touched as soon as they type
+    setTouched((prev) => ({ ...prev, [name]: true }));
 
     if (errors[name as keyof T]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+  };
+
+  // Optional but recommended: Mark as touched when an input loses focus
+  const handleBlur = (
+    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const { name } = event.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const validationErrors = validate(formData);
+
+    // On submit, force all fields to be touched so all errors display
+    const allTouched = Object.keys(initialValues).reduce(
+      (acc, key) => {
+        acc[key as keyof T] = true;
+        return acc;
+      },
+      {} as Partial<Record<keyof T, boolean>>,
+    );
+    setTouched(allTouched);
 
     if (Object.keys(validationErrors).length === 0) {
       setErrors({});
@@ -61,5 +85,13 @@ export function useForm<T extends Record<string, any>>({
     }
   };
 
-  return { formData, setFormData, errors, handleChange, handleSubmit };
+  return {
+    formData,
+    setFormData,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  };
 }
