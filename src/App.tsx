@@ -59,9 +59,15 @@ function App() {
       <section className="operator-details">
         <div className="operator-details__id">
           <span className="text-upper">Operator ID</span>
-          <span className="text-upper" id="operatorId">
-            Unassigned
-          </span>
+          {(formData.callSign && (
+            <span className="operator-details__callSign">
+              {formData.callSign}
+            </span>
+          )) || (
+            <span className="text-upper operator-details__noCallSign">
+              Unassigned
+            </span>
+          )}
         </div>
       </section>
       <Form

@@ -145,4 +145,14 @@ p {
     display: flex;
     justify-content: space-between;
   }
+
+  .operator-details__callSign {
+    color: var(--text-h);
+  }
+
+  .operator-details__callSign,
+  .operator-details__noCallSign {
+    font-family: var(--heading);
+    font-weight: 700;
+  }
 }
