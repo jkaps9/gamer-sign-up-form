@@ -36,9 +36,9 @@
 :root {
   --text: var(--neutral-100);
   --text-h: var(--neutral-50);
-  --bg: var(--neutral-950);
-  --border: var(--neutral-300);
-  --code-bg: #f4f3ec;
+  --bg: var(--navy-950);
+  --border: var(--neutral-700);
+  --bg-surface: var(--neutral-900);
   --accent: var(--lime-500);
   --accent-bg: var(--lime-alpha-40);
   --accent-border: var(--lime-alpha-60);
@@ -66,15 +66,13 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1126px;
+  min-height: 100svh;
+  width: 100%;
 }
 
 body {
@@ -111,16 +109,15 @@ p {
   margin: 0;
 }
 
-code {
-  font-family: var(--mono);
+.btn {
+  background-color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 0;
+  cursor: pointer;
+  color: var(--bg-surface);
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-family: inherit;
+  font-weight: 700;
+  padding: 0.5rem 0.75rem;
+  text-transform: uppercase;
 }

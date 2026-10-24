@@ -1,5 +1,6 @@
 .form {
-  background-color: var(--neutral-800);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 0;
   display: flex;
   flex-direction: column;
@@ -20,7 +21,7 @@
 }
 
 .input {
-  background-color: var(--neutral-900);
+  background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 0;
   color: var(--text);
