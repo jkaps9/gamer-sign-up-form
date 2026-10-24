@@ -17,17 +17,36 @@ function App() {
       },
       validate: (values) => {
         const newErrors: Partial<Record<keyof typeof values, string>> = {};
-        if (!values.callSign) newErrors.callSign = "Can't be empty";
-        if (!values.email) newErrors.email = "Can't be empty";
-        if (!values.password) newErrors.password = "Can't be blank";
+        if (!values.callSign) {
+          newErrors.callSign = "Can't be empty";
+        } else if (values.callSign.length < 3) {
+          newErrors.callSign = "Use at least 3 characters";
+        } else if (values.callSign.length > 20) {
+          newErrors.callSign = "Use less than 20 characters";
+        }
+
+        if (!values.email) {
+          newErrors.email = "Can't be empty";
+        }
+        if (!values.password) {
+          newErrors.password = "Can't be blank";
+        }
         if (values.password !== values.confirmPassword) {
           newErrors.confirmPassword = "Passwords do not match";
         }
-        if (!values.acceptTerms)
+        if (!values.acceptTerms) {
           newErrors.acceptTerms = "Must accept to create account";
+        }
         return newErrors;
       },
-      onSubmit: async (values) => {
+      onSubmit: async () => {
+        setFormData(() => ({
+          callSign: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          acceptTerms: false,
+        }));
         alert("Submission Successful");
       },
     },
@@ -85,8 +104,7 @@ function App() {
           placeholder="e.g. Vortex_07"
           value={formData.callSign}
           onChange={handleChange}
-          errorMessage={errors.Callsign}
-          required
+          errorMessage={errors.callSign}
           autoComplete="off"
         />
 
@@ -120,7 +138,7 @@ function App() {
           id="confirmPassword"
           name="confirmPassword"
           label="Confirm Password"
-          type="confirmPassword"
+          type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
           required
