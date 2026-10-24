@@ -1,8 +1,11 @@
+import { useState } from "react";
 import FormInput from "@components/FormInput";
 import Form from "@components/Form";
 import { useForm } from "@hooks/useFormValidation";
+import Logo from "@assets/images/logo.svg?react";
 
 function App() {
+  const [numReady, setNumready] = useState(0);
   const { formData, setFormData, errors, handleChange, handleSubmit } = useForm(
     {
       initialValues: {
@@ -43,6 +46,24 @@ function App() {
 
   return (
     <>
+      <header className="main-header">
+        <Logo></Logo>
+        <span className="text-upper">{numReady}/5 ready</span>
+      </header>
+      <section className="hero">
+        <h1>
+          <span className="text-accent">//</span> Join the Nexus
+        </h1>
+        <p className="text-upper">Initialize your Neoncore identity</p>
+      </section>
+      <section className="operator-details">
+        <div className="operator-details__id">
+          <span className="text-upper">Operator ID</span>
+          <span className="text-upper" id="operatorId">
+            Unassigned
+          </span>
+        </div>
+      </section>
       <Form
         title="New Operator"
         description="All fields required"

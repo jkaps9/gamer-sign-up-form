@@ -34,7 +34,7 @@
 }
 
 :root {
-  --text: var(--neutral-100);
+  --text: var(--neutral-500);
   --text-h: var(--neutral-50);
   --bg: var(--navy-950);
   --border: var(--neutral-700);
@@ -119,4 +119,30 @@ p {
   font-weight: 700;
   padding: 0.5rem 0.75rem;
   text-transform: uppercase;
+}
+
+.text-upper {
+  text-transform: uppercase;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.main-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-block: 1rem;
+}
+.hero {
+  padding-block: 1rem;
+}
+.operator-details {
+  border-block-start: 1px solid var(--border);
+  padding-block: 1rem;
+  .operator-details__id {
+    display: flex;
+    justify-content: space-between;
+  }
 }
