@@ -1,11 +1,58 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import FormInput from "@components/FormInput";
 import Form from "@components/Form";
 import { useForm } from "@hooks/useFormValidation";
 import Logo from "@assets/images/logo.svg?react";
 
+interface FormValues {
+  callSign: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  acceptTerms: boolean;
+}
+
 function App() {
   const [numReady, setNumready] = useState(0);
+
+  const validateForm = useCallback((values: FormValues) => {
+    const newErrors: Partial<Record<keyof FormValues, string>> = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!values.callSign) {
+      newErrors.callSign = "Can't be empty";
+    } else if (values.callSign.length < 3) {
+      newErrors.callSign = "Use at least 3 characters";
+    } else if (values.callSign.length > 20) {
+      newErrors.callSign = "Use less than 20 characters";
+    }
+
+    if (!values.email) {
+      newErrors.email = "Can't be empty";
+    } else if (!emailRegex.test(values.email)) {
+      newErrors.email = "Enter a valid email, like you@example.com";
+    }
+
+    if (!values.password) {
+      newErrors.password = "Can't be blank";
+    } else if (values.password.length < 8) {
+      newErrors.password = "Use at least 8 characters";
+    }
+
+    if (!values.confirmPassword) {
+      newErrors.confirmPassword = "Can't be blank";
+    } else if (values.password !== values.confirmPassword) {
+      // Note: Added 'else if' here to prevent overwriting the blank error
+      newErrors.confirmPassword = "Passwords don't match";
+    }
+
+    if (!values.acceptTerms) {
+      newErrors.acceptTerms = "Accept the terms to continue";
+    }
+
+    return newErrors;
+  }, []);
+
   const { formData, setFormData, errors, handleChange, handleSubmit } = useForm(
     {
       initialValues: {
@@ -15,41 +62,7 @@ function App() {
         confirmPassword: "",
         acceptTerms: false,
       },
-      validate: (values) => {
-        const newErrors: Partial<Record<keyof typeof values, string>> = {};
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!values.callSign) {
-          newErrors.callSign = "Can't be empty";
-        } else if (values.callSign.length < 3) {
-          newErrors.callSign = "Use at least 3 characters";
-        } else if (values.callSign.length > 20) {
-          newErrors.callSign = "Use less than 20 characters";
-        }
-
-        if (!values.email) {
-          newErrors.email = "Can't be empty";
-        } else if (!emailRegex.test(values.email)) {
-          newErrors.email = "Enter a valid email, like you@example.com";
-        }
-
-        if (!values.password) {
-          newErrors.password = "Can't be blank";
-        } else if (values.password.length < 8) {
-          newErrors.password = "Use at least 8 characters";
-        }
-
-        if (!values.confirmPassword) {
-          newErrors.confirmPassword = "Can't be blank";
-        }
-        if (values.password !== values.confirmPassword) {
-          newErrors.confirmPassword = "Passwords don't match";
-        }
-        if (!values.acceptTerms) {
-          newErrors.acceptTerms = "Accept the terms to continue";
-        }
-        return newErrors;
-      },
+      validate: validateForm,
       onSubmit: async () => {
         setFormData(() => ({
           callSign: "",
@@ -60,6 +73,7 @@ function App() {
         }));
         alert("Submission Successful");
       },
+      debounceMs: 2000,
     },
   );
 
@@ -105,7 +119,7 @@ function App() {
               <span className="text-upper">{numReady}/5 ready</span>
             </div>
           </div>
-          <ul>
+          <ul className="hide-on-mobile">
             <li className="row">
               <span className="attribute text-upper">Callsign</span>
               <span

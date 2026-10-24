@@ -1,30 +1,45 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
 interface UseFormProps<T> {
   initialValues: T;
   validate: (values: T) => Partial<Record<keyof T, string>>;
   onSubmit: (values: T) => Promise<void> | void;
+  debounceMs?: number;
 }
 
 export function useForm<T extends Record<string, any>>({
   initialValues,
   validate,
   onSubmit,
+  debounceMs = 500,
 }: UseFormProps<T>) {
   const [formData, setFormData] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    if (!isDirty) return;
+
+    const timer = setTimeout(() => {
+      const validationErrors = validate(formData);
+      setErrors(validationErrors);
+    }, debounceMs);
+
+    return () => clearTimeout(timer);
+  }, [formData, validate, debounceMs, isDirty]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
 
+    if (!isDirty) setIsDirty(true);
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
 
-    // Clear the error for this specific field once the user starts typing
     if (errors[name as keyof T]) {
       setErrors((prev) => ({
         ...prev,
@@ -38,7 +53,6 @@ export function useForm<T extends Record<string, any>>({
 
     const validationErrors = validate(formData);
 
-    // If no errors exist, proceed with submission
     if (Object.keys(validationErrors).length === 0) {
       setErrors({});
       await onSubmit(formData);
@@ -47,6 +61,5 @@ export function useForm<T extends Record<string, any>>({
     }
   };
 
-  // Exposing setFormData so routes like SignUp can clear the form on success
   return { formData, setFormData, errors, handleChange, handleSubmit };
 }

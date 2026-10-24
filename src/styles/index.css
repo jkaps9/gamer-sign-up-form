@@ -194,6 +194,7 @@ ul {
   .operator-details__id {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     @media (min-width: 64rem) {
       flex-direction: column;
     }
